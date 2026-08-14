@@ -23,6 +23,7 @@ def req_by_section(reqs, section_fragment: str):
 # 073 CSV — single-sheet, LA scope embedded in description
 # ---------------------------------------------------------------------------
 
+@pytest.mark.skipif(not CSV_073.exists(), reason="073 CSV sample not in repo")
 class TestCSV073:
     @pytest.fixture(scope="class")
     def reqs(self):
@@ -156,6 +157,7 @@ class TestXLSX087:
 # Paygroup inference
 # ---------------------------------------------------------------------------
 
+@pytest.mark.skipif(not CSV_073.exists(), reason="073 CSV sample not in repo")
 def test_paygroup_inferred_from_csv_filename():
     reqs = load_ri(CSV_073)
     assert all(r.paygroup == "073" for r in reqs)
