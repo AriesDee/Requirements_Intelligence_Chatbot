@@ -1,10 +1,11 @@
 import json
-import os
 from collections.abc import Callable
 
-import google.generativeai as genai
+import google.genai as genai
+from google.genai import types
 from pydantic import BaseModel
 
+from ric._vertex import make_client
 from ric.ioc.models import IOCChange, IOCParseResult
 from ric.matcher.models import ChangeMatch
 
@@ -72,7 +73,8 @@ class _FlagResult(BaseModel):
 def _flag_change(
     change: IOCChange,
     cm: ChangeMatch,
-    gemini: genai.GenerativeModel,
+    client: genai.Client,
+    model: str,
     ioc_effective_date: str | None,
 ) -> list[RiskFlag]:
     delta_summary = "\n".join(
@@ -98,7 +100,14 @@ def _flag_change(
         f"Return JSON matching this schema:\n{schema_str}"
     )
 
-    response = gemini.generate_content(prompt)
+    response = client.models.generate_content(
+        model=model,
+        contents=prompt,
+        config=types.GenerateContentConfig(
+            system_instruction=_SYSTEM,
+            response_mime_type="application/json",
+        ),
+    )
     result = _FlagResult.model_validate(json.loads(response.text))
     return result.flags
 
@@ -107,27 +116,20 @@ def flag_changes(
     ioc: IOCParseResult,
     results: list[ChangeMatch],
     *,
-    model: str = "gemini-2.0-flash",
+    model: str = "gemini-2.5-flash",
     on_progress: Callable[[int, int, IOCChange], None] | None = None,
 ) -> list[ChangeMatch]:
     """Enrich each ChangeMatch with risk/clarification flags (Stage 4).
 
     Returns the same list with risk_flags populated on each item.
     """
-    genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
-    gemini = genai.GenerativeModel(
-        model_name=model,
-        generation_config=genai.GenerationConfig(
-            response_mime_type="application/json",
-        ),
-        system_instruction=_SYSTEM,
-    )
+    client = make_client()
 
     total = len(results)
     for i, cm in enumerate(results, 1):
         if on_progress:
             on_progress(i, total, cm.change)
-        flags = _flag_change(cm.change, cm, gemini, ioc.effective_date)
+        flags = _flag_change(cm.change, cm, client, model, ioc.effective_date)
         cm.risk_flags = flags
 
     return results

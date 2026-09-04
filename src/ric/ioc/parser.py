@@ -1,9 +1,9 @@
 import json
-import os
 from pathlib import Path
 
-import google.generativeai as genai
+from google.genai import types
 
+from ric._vertex import make_client
 from .models import IOCParseResult
 from .reader import extract_text
 
@@ -49,21 +49,12 @@ FALSE — purely benefits-side, not tracked in timekeeping:
 """
 
 
-def parse_ioc(path: str | Path, *, model: str = "gemini-2.0-flash") -> IOCParseResult:
+def parse_ioc(path: str | Path, *, model: str = "gemini-2.5-flash") -> IOCParseResult:
     """Parse an IOC PDF into structured change events."""
     text = extract_text(path)
-
-    genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
+    client = make_client()
 
     schema_str = json.dumps(IOCParseResult.model_json_schema(), indent=2)
-
-    gemini = genai.GenerativeModel(
-        model_name=model,
-        generation_config=genai.GenerationConfig(
-            response_mime_type="application/json",
-        ),
-        system_instruction=_SYSTEM,
-    )
 
     prompt = (
         "Parse all changes from this IOC document.\n\n"
@@ -71,5 +62,12 @@ def parse_ioc(path: str | Path, *, model: str = "gemini-2.0-flash") -> IOCParseR
         f"IOC Document:\n{text}"
     )
 
-    response = gemini.generate_content(prompt)
+    response = client.models.generate_content(
+        model=model,
+        contents=prompt,
+        config=types.GenerateContentConfig(
+            system_instruction=_SYSTEM,
+            response_mime_type="application/json",
+        ),
+    )
     return IOCParseResult.model_validate(json.loads(response.text))

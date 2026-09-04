@@ -71,20 +71,19 @@ _HOUR_TOKEN_RE = re.compile(r"\b([A-Z][A-Z0-9-]{1,9})\b")
 
 
 def _infer_paygroup(path: Path) -> str:
-    m = re.search(r"\b(\d{3})\b", path.stem)
+    m = re.search(r"\b(\d{3}[A-Za-z]?)\b", path.stem)
     if m:
-        return m.group(1)
+        return m.group(1).upper()
     for part in reversed(path.parts):
-        m = re.search(r"(?i)paygroup[s]?\s+(\d{3})", part)
+        m = re.search(r"(?i)paygroup[s]?\s+(\d{3}[A-Za-z]?)", part)
         if m:
-            return m.group(1)
-        m = re.search(r"^(\d{3})(?:\D|$)", part)
+            return m.group(1).upper()
+        m = re.search(r"^(\d{3}[A-Za-z]?)(?:\W|$)", part)
         if m:
-            return m.group(1)
-    raise ValueError(
-        f"Cannot infer paygroup from path: {path}\n"
-        "Pass paygroup= explicitly to the adapter."
-    )
+            return m.group(1).upper()
+    # Fall back to a sanitized filename stem (no paygroup found)
+    slug = re.sub(r"[^A-Z0-9]+", "_", path.stem.upper()).strip("_")
+    return slug[:24]
 
 
 def _slugify(text: str) -> str:
@@ -212,18 +211,20 @@ def load_fri(path: str | Path, *, paygroup: str | None = None) -> list[Requireme
     pg = paygroup or _infer_paygroup(path)
 
     wb = openpyxl.load_workbook(path, read_only=True, data_only=True)
+    try:
+        data_sheets = [
+            name for name in wb.sheetnames
+            if not _METADATA_SHEETS.match(name.strip())
+        ]
 
-    data_sheets = [
-        name for name in wb.sheetnames
-        if not _METADATA_SHEETS.match(name.strip())
-    ]
-
-    results: list[Requirement] = []
-    for sheet_name in data_sheets:
-        ws = wb[sheet_name]
-        rows = [tuple(r) for r in ws.iter_rows(values_only=True)]
-        if not rows or not any(c is not None for c in rows[0]):
-            continue
-        results.extend(_iter_sheet(rows, paygroup=pg, sheet_name=sheet_name))
+        results: list[Requirement] = []
+        for sheet_name in data_sheets:
+            ws = wb[sheet_name]
+            rows = [tuple(r) for r in ws.iter_rows(values_only=True)]
+            if not rows or not any(c is not None for c in rows[0]):
+                continue
+            results.extend(_iter_sheet(rows, paygroup=pg, sheet_name=sheet_name))
+    finally:
+        wb.close()
 
     return results

@@ -21,8 +21,8 @@ def main() -> None:
                    help="Paygroup override (inferred from filename when omitted)")
     p.add_argument("--output", default="impact_analysis", metavar="BASENAME",
                    help="Output file basename without extension (default: impact_analysis)")
-    p.add_argument("--model", default="gemini-2.0-flash", metavar="MODEL",
-                   help="Gemini model ID (default: gemini-2.0-flash)")
+    p.add_argument("--model", default="gemini-2.5-flash", metavar="MODEL",
+                   help="Gemini model ID (default: gemini-2.5-flash)")
 
     args = parser.parse_args()
     if args.command == "analyze":

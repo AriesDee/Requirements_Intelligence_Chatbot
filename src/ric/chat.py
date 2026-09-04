@@ -1,10 +1,9 @@
 """
-Chat module — Q&A over a loaded impact analysis using Gemini.
+Chat module — Q&A over a loaded impact analysis using Gemini via Vertex AI.
 """
-import os
+from google.genai import types
 
-import google.generativeai as genai
-
+from ric._vertex import make_client
 from ric.ioc.models import IOCParseResult
 from ric.matcher.models import ChangeMatch
 
@@ -76,20 +75,26 @@ def ask(
     context: str,
     history: list[dict],
     *,
-    model: str = "gemini-2.0-flash",
+    model: str = "gemini-2.5-flash",
 ) -> str:
-    """Send a question to Gemini with the analysis context and conversation history."""
-    genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
+    """Send a question to Gemini (Vertex AI) with the analysis context and conversation history."""
+    client = make_client()
 
-    gemini = genai.GenerativeModel(
-        model_name=model,
-        system_instruction=_SYSTEM + "\n\n" + context,
-    )
-
-    chat = gemini.start_chat(history=[
-        {"role": msg["role"], "parts": [msg["content"]]}
+    history_contents = [
+        types.Content(
+            role=msg["role"],
+            parts=[types.Part(text=msg["content"])],
+        )
         for msg in history
-    ])
+    ]
+
+    chat = client.chats.create(
+        model=model,
+        config=types.GenerateContentConfig(
+            system_instruction=_SYSTEM + "\n\n" + context,
+        ),
+        history=history_contents,
+    )
 
     response = chat.send_message(question)
     return response.text

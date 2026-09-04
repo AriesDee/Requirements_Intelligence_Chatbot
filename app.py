@@ -18,11 +18,14 @@ def _detect_format(path: Path) -> str:
         return "RI"
     try:
         wb = openpyxl.load_workbook(path, read_only=True, data_only=True)
-        for name in wb.sheetnames:
-            ws = wb[name]
-            row = next(ws.iter_rows(values_only=True), None)
-            if row and len(row) > 2 and str(row[2] or "").strip() == "People Group":
-                return "FRI"
+        try:
+            for name in wb.sheetnames:
+                ws = wb[name]
+                row = next(ws.iter_rows(values_only=True), None)
+                if row and len(row) > 2 and str(row[2] or "").strip() == "People Group":
+                    return "FRI"
+        finally:
+            wb.close()
     except Exception:
         pass
     return "RI"
@@ -79,9 +82,9 @@ with st.sidebar:
     st.subheader("2 · Options")
     model = st.selectbox(
         "Gemini model",
-        ["gemini-2.0-flash", "gemini-1.5-flash", "gemini-1.5-pro"],
+        ["gemini-2.5-flash", "gemini-2.5-flash-lite", "gemini-2.5-pro"],
         index=0,
-        help="gemini-2.0-flash is free and fast; 1.5-pro is more capable.",
+        help="gemini-2.5-flash is fast and capable; 2.5-pro is most accurate.",
     )
     paygroup_input = st.text_input(
         "Paygroup override",
@@ -94,7 +97,7 @@ with st.sidebar:
     if demo_mode:
         st.caption("✅ IOC PDF uploaded")
         st.caption("✅ FRI or RI file uploaded")
-        st.caption("✅ GOOGLE_API_KEY set")
+        st.caption("✅ Vertex AI credentials set")
         st.caption("_Demo mode — using sample data_")
         can_run = False
         run_btn = False
@@ -106,14 +109,14 @@ with st.sidebar:
     else:
         _ioc_ok  = bool(ioc_file)
         _reqs_ok = bool(fri_files) or bool(ri_files)
-        _key_ok  = bool(os.getenv("GOOGLE_API_KEY"))
+        _key_ok  = bool(os.getenv("GOOGLE_APPLICATION_CREDENTIALS"))
 
         def _req(ok: bool, label: str) -> None:
             st.caption(("✅ " if ok else "⬜ ") + label)
 
         _req(_ioc_ok,  "IOC PDF uploaded")
         _req(_reqs_ok, "FRI or RI file uploaded")
-        _req(_key_ok,  "GOOGLE_API_KEY set")
+        _req(_key_ok,  "Vertex AI credentials set")
 
         can_run = _ioc_ok and _reqs_ok and _key_ok
         run_btn = st.button(
@@ -135,7 +138,7 @@ if demo_btn:
     ioc = sample_ioc()
     results = sample_results(ioc)
     reqs = sample_requirements()
-    with tempfile.TemporaryDirectory() as tmpdir:
+    with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmpdir:
         tmp = Path(tmpdir)
         out = output_name or "impact_analysis"
         xlsx_path = tmp / f"{out}.xlsx"
@@ -158,7 +161,7 @@ if demo_btn:
 if run_btn and can_run:
     pg = paygroup_input.strip() or None
 
-    with tempfile.TemporaryDirectory() as tmpdir:
+    with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmpdir:
         tmp = Path(tmpdir)
 
         # Save uploads to disk (parsers need real file paths)
@@ -434,7 +437,7 @@ if st.session_state.results:
     with tab2:
         from ric.chat import ask
 
-        _has_key = bool(os.getenv("GOOGLE_API_KEY"))
+        _has_key = bool(os.getenv("GOOGLE_APPLICATION_CREDENTIALS"))
         _is_demo_chat = st.session_state.get("chat_is_demo", False)
 
         if _is_demo_chat:
@@ -486,7 +489,7 @@ if st.session_state.results:
                 st.rerun()
         else:
             st.warning(
-                "Set GOOGLE_API_KEY and restart the app to ask your own questions.",
+                "Set GOOGLE_APPLICATION_CREDENTIALS and restart the app to ask your own questions.",
                 icon="⚠️",
             )
 

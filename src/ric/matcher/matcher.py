@@ -1,10 +1,11 @@
 import json
-import os
 from collections.abc import Callable
 
-import google.generativeai as genai
+import google.genai as genai
+from google.genai import types
 from pydantic import BaseModel
 
+from ric._vertex import make_client
 from ric.ioc.models import IOCChange, IOCParseResult
 from ric.models import Requirement
 
@@ -78,7 +79,8 @@ def _format_requirements(reqs: list[Requirement]) -> str:
 def _match_change(
     change: IOCChange,
     candidates: list[Requirement],
-    gemini: genai.GenerativeModel,
+    client: genai.Client,
+    model: str,
 ) -> ChangeMatch:
     if not candidates:
         return ChangeMatch(
@@ -104,7 +106,14 @@ def _match_change(
         f"Return JSON matching this schema:\n{schema_str}"
     )
 
-    response = gemini.generate_content(prompt)
+    response = client.models.generate_content(
+        model=model,
+        contents=prompt,
+        config=types.GenerateContentConfig(
+            system_instruction=_SYSTEM,
+            response_mime_type="application/json",
+        ),
+    )
     result = _LLMMatchResult.model_validate(json.loads(response.text))
 
     # Guard against hallucinated IDs
@@ -122,18 +131,11 @@ def match_changes(
     ioc: IOCParseResult,
     requirements: list[Requirement],
     *,
-    model: str = "gemini-2.0-flash",
+    model: str = "gemini-2.5-flash",
     on_progress: Callable[[int, int, IOCChange], None] | None = None,
 ) -> list[ChangeMatch]:
     """For each IOC change, find the requirements that need review."""
-    genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
-    gemini = genai.GenerativeModel(
-        model_name=model,
-        generation_config=genai.GenerationConfig(
-            response_mime_type="application/json",
-        ),
-        system_instruction=_SYSTEM,
-    )
+    client = make_client()
 
     results = []
     total = len(ioc.changes)
@@ -141,5 +143,5 @@ def match_changes(
         if on_progress:
             on_progress(i, total, change)
         candidates = filter_by_la_scope(requirements, change, ioc.labor_agreement_ids)
-        results.append(_match_change(change, candidates, gemini))
+        results.append(_match_change(change, candidates, client, model))
     return results
