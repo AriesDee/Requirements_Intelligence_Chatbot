@@ -25,8 +25,12 @@ IOCs announce changes to union Labor Agreements (LAs). Extract EVERY change and 
 
 ## Change Type Classification
 - wage_rate: base wages, wage rates, wage scales, wage step increases
-- premium_value: premium pay amounts, shift differentials, holiday pay rates, ratification bonuses
-- eligibility: changes to who qualifies for a benefit or rule
+- premium_value: premium pay amounts, shift differentials, holiday pay rates, ratification bonuses.
+  Use this ONLY when the rate/multiplier/dollar amount itself changes (e.g. OT rate changes from
+  1.5x to 1.75x, or a shift differential increases from $1.00 to $1.25).
+- eligibility: changes to who qualifies for a pay rule, or changes to the threshold/trigger condition
+  for a rule — including overtime hours thresholds (e.g. daily OT now applies after 8 hrs instead
+  of 10), schedule eligibility (5/8 vs 4/10), or qualifying conditions for a premium.
 - list_operation: adding or removing items from a defined list (holiday list, job class list)
 - holiday_composition: changes to which holidays are recognized in the contract
 - benefit: H&W/health & welfare, dental, vision, or pension contribution amounts (NOT timekeeping)

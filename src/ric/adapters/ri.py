@@ -53,7 +53,7 @@ _METADATA_SHEETS = re.compile(
         | dc\s+qa
         | req\s+type\s+numbering
         | process\s+flow
-        | old
+        | old(\s*[\-_].+)?
     )$
     """,
     re.VERBOSE | re.IGNORECASE,

@@ -6,25 +6,8 @@ filter sub-populations within the People Group (job classes, hire-date cohorts),
 not labor agreements. So scope_type is always "all" from the LA perspective, and
 the People Group is stored in extra["people_group"] for routing by the engine.
 
-Columns (0-indexed, row 0 is the header):
-  0   Sequence #          — unreliable; ignored for ID generation
-  1   Banner              → extra["banner"]
-  2   People Group        → extra["people_group"]
-  3   Employee Type       → extra["employee_type"]
-  4   Default Hours       → extra["default_hours"]
-  5   Requirements Category → category
-  6   Requirements Type   → section (slug used in ID)
-  7   Requirements        → description
-  8   Include             → extra["include"] (job-class filter, not LA codes)
-  9   Exclude             → extra["exclude"]
-  10  Enhancement         → extra["enhancement"]
-  11  Hour Type/Timecode  → hour_types
-  12  Earn codes          → earn_codes
-  13  Adj. Earn codes     → adj_earn_codes
-  14  Timecode List       → extra["timecode_list"]
-  15  CBA/Past Practice   → contract_reference
-  16  Notes               → extra["notes"]
-  17  Element name        → extra["element_name"] (optional column)
+Column positions are detected dynamically from the header row so the adapter
+works regardless of hidden/extra columns across different FRI file versions.
 """
 
 import re
@@ -63,8 +46,8 @@ _METADATA_SHEETS = re.compile(
     re.VERBOSE | re.IGNORECASE,
 )
 
-# 3-digit earn code
-_EARN_CODE_RE = re.compile(r"\b([0-9]{3})\b")
+# Earn codes: 2-3 digits optionally followed by one letter (e.g. 099, 34B, 65A)
+_EARN_CODE_RE = re.compile(r"\b([0-9]{2,3}[A-Za-z]?)\b")
 
 # Hour type tokens (2-10 alphanumeric + hyphen characters)
 _HOUR_TOKEN_RE = re.compile(r"\b([A-Z][A-Z0-9-]{1,9})\b")
@@ -101,6 +84,63 @@ def _is_blank_row(row: tuple) -> bool:
     return not any(str(c).strip() for c in row if c is not None)
 
 
+# Maps logical field name → candidate header strings (lowercase, checked in order)
+_COL_ALIASES: dict[str, list[str]] = {
+    "banner":             ["banner"],
+    "people_group":       ["people group"],
+    "employee_type":      ["employee type"],
+    "default_hours":      ["default hours"],
+    "category":           ["requirements category", "requirement category"],
+    "section":            ["requirements type", "requirement type"],
+    "description":        ["requirements", "requirement"],
+    "include":            ["include"],
+    "exclude":            ["exclude"],
+    "enhancement":        ["enhancement"],
+    "hour_types":         ["hour type/timecode", "hour type", "timecode", "hour types"],
+    "earn_codes":         ["earn codes", "earn code"],
+    "adj_earn_codes":     ["adj. earn codes", "adj earn codes", "adj. earn code"],
+    "timecode_list":      ["timecode list"],
+    "contract_reference": ["cba/past practice", "cba", "past practice"],
+    "notes":              ["notes"],
+    "element_name":       ["element name"],
+}
+
+
+def _build_col_map(header_row: tuple) -> dict[str, int]:
+    """Return {field_name: column_index} by matching header cells to known aliases."""
+    raw = {str(cell).strip().lower(): i for i, cell in enumerate(header_row) if cell is not None}
+    col_map: dict[str, int] = {}
+    for field, aliases in _COL_ALIASES.items():
+        for alias in aliases:
+            if alias in raw:
+                col_map[field] = raw[alias]
+                break
+    return col_map
+
+
+def _find_header_row(rows: list[tuple], max_scan: int = 5) -> int:
+    """Return the index of the first row that looks like a header (≥3 known column names).
+
+    Some FRI files have junk/notes rows before the real header. Scanning the first
+    few rows and picking the one with the most alias matches handles this robustly.
+    """
+    all_aliases = {alias for aliases in _COL_ALIASES.values() for alias in aliases}
+    best_idx, best_score = 0, 0
+    for i, row in enumerate(rows[:max_scan]):
+        cells = {str(c).strip().lower() for c in row if c is not None}
+        score = len(cells & all_aliases)
+        if score > best_score:
+            best_score, best_idx = score, i
+    return best_idx
+
+
+def _col(row: tuple, col_map: dict[str, int], field: str) -> str:
+    idx = col_map.get(field)
+    if idx is None:
+        return ""
+    return _cell(row, idx)
+
+
 def _parse_earn_codes(raw: str) -> list[str]:
     seen: set[str] = set()
     result: list[str] = []
@@ -129,6 +169,7 @@ def _parse_hour_types(raw: str) -> list[str]:
 def _row_to_requirement(
     row: tuple,
     *,
+    col_map: dict[str, int],
     section_counters: dict[str, int],
     paygroup: str,
     sheet_name: str,
@@ -136,31 +177,30 @@ def _row_to_requirement(
     if _is_blank_row(row):
         return None
 
-    description = _cell(row, 7)
+    def c(field: str) -> str:
+        return _col(row, col_map, field)
+
+    description = c("description")
     if not description:
         return None
 
-    section = _cell(row, 6)
+    section = c("section")
     section_slug = _slugify(section) if section else "UNKNOWN"
     n = section_counters.get(section_slug, 0) + 1
     section_counters[section_slug] = n
 
-    raw_hour = _cell(row, 11)
-    raw_earn = _cell(row, 12)
-    raw_adj = _cell(row, 13)
-
     extra: dict = {
         "sheet_name": sheet_name,
-        "banner": _cell(row, 1),
-        "people_group": _cell(row, 2),
-        "employee_type": _cell(row, 3),
-        "default_hours": _cell(row, 4),
-        "enhancement": _cell(row, 10),
-        "include": _cell(row, 8),
-        "exclude": _cell(row, 9),
-        "timecode_list": _cell(row, 14),
-        "notes": _cell(row, 16) if len(row) > 16 else "",
-        "element_name": _cell(row, 17) if len(row) > 17 else "",
+        "banner":        c("banner"),
+        "people_group":  c("people_group"),
+        "employee_type": c("employee_type"),
+        "default_hours": c("default_hours"),
+        "enhancement":   c("enhancement"),
+        "include":       c("include"),
+        "exclude":       c("exclude"),
+        "timecode_list": c("timecode_list"),
+        "notes":         c("notes"),
+        "element_name":  c("element_name"),
     }
     extra = {k: v for k, v in extra.items() if v}
 
@@ -169,14 +209,14 @@ def _row_to_requirement(
         source="FRI",
         paygroup=paygroup,
         section=section,
-        category=_cell(row, 5) or None,
-        contract_reference=_cell(row, 15) or None,
+        category=c("category") or None,
+        contract_reference=c("contract_reference") or None,
         description=description,
         scope_type="all",
         labor_agreements=[],
-        hour_types=_parse_hour_types(raw_hour),
-        earn_codes=_parse_earn_codes(raw_earn),
-        adj_earn_codes=_parse_earn_codes(raw_adj),
+        hour_types=_parse_hour_types(c("hour_types")),
+        earn_codes=_parse_earn_codes(c("earn_codes")),
+        adj_earn_codes=_parse_earn_codes(c("adj_earn_codes")),
         extra=extra,
     )
 
@@ -190,13 +230,16 @@ def _iter_sheet(
 ) -> Iterator[Requirement]:
     if section_counters is None:
         section_counters = {}
-    for i, row in enumerate(rows):
-        if i == 0:
-            continue  # header row
+    if not rows:
+        return
+    header_idx = _find_header_row(rows)
+    col_map = _build_col_map(rows[header_idx])
+    for row in rows[header_idx + 1:]:
         if _is_blank_row(row):
             continue
         req = _row_to_requirement(
             row,
+            col_map=col_map,
             section_counters=section_counters,
             paygroup=paygroup,
             sheet_name=sheet_name,
