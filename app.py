@@ -4,12 +4,28 @@ Requirements Intelligence Chatbot — Streamlit UI.
 Run with:
     streamlit run app.py
 """
+import json
 import os
+import sys
 import tempfile
 from pathlib import Path
 
+# Make src/ric importable whether running locally or on Streamlit Cloud
+sys.path.insert(0, str(Path(__file__).parent / "src"))
+
 import openpyxl
 import streamlit as st
+
+# ── GCP credentials bootstrap (Streamlit Community Cloud) ────────────────────
+# Locally the GOOGLE_APPLICATION_CREDENTIALS env var points to the JSON file.
+# On Streamlit Cloud, paste the JSON fields under [gcp_service_account] in
+# the app's Secrets UI — this block writes them to a temp file automatically.
+if "gcp_service_account" in st.secrets and not os.getenv("GOOGLE_APPLICATION_CREDENTIALS"):
+    _sa_dict = dict(st.secrets["gcp_service_account"])
+    _sa_tmp = tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False)
+    json.dump(_sa_dict, _sa_tmp)
+    _sa_tmp.close()
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = _sa_tmp.name
 
 
 def _status_pill(ok: bool, label: str) -> str:
