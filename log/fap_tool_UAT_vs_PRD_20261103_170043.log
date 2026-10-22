@@ -1,0 +1,20 @@
+2026-11-03 17:00:44  INFO      Authentication successful (UAT)
+2026-11-03 17:00:46  INFO      Authentication successful (PRD)
+2026-11-03 17:00:46  INFO      GET https://albertsons-uat.npr.mykronos.com/api/v1/commons/function_access_profiles?name=Super%20Access
+2026-11-03 17:00:47  INFO      GET https://albertsons.prd.mykronos.com/api/v1/commons/function_access_profiles?name=Super%20Access
+2026-11-03 17:00:48  INFO      GET https://albertsons-uat.npr.mykronos.com/api/v1/commons/function_access_profiles?name=WFM%20Corporate%20Team
+2026-11-03 17:00:49  INFO      "WFM Corporate Team" does not exist in UAT
+2026-11-03 17:00:49  INFO      GET https://albertsons.prd.mykronos.com/api/v1/commons/function_access_profiles?name=WFM%20Corporate%20Team
+2026-11-03 17:00:51  WARNING   "WFM Corporate Team" exists in PRD but not in UAT - skipped
+2026-11-03 17:00:51  INFO      GET https://albertsons-uat.npr.mykronos.com/api/v1/commons/function_access_profiles?name=ACI%20CDX%20Access
+2026-11-03 17:00:52  INFO      GET https://albertsons.prd.mykronos.com/api/v1/commons/function_access_profiles?name=ACI%20CDX%20Access
+2026-11-03 17:00:53  INFO      GET https://albertsons-uat.npr.mykronos.com/api/v1/commons/function_access_profiles?name=API%20User%20Only
+2026-11-03 17:00:53  INFO      "API User Only" does not exist in UAT
+2026-11-03 17:00:53  INFO      GET https://albertsons.prd.mykronos.com/api/v1/commons/function_access_profiles?name=API%20User%20Only
+2026-11-03 17:00:54  INFO      "API User Only" does not exist in PRD
+2026-11-03 17:00:54  WARNING   "API User Only" does not exist in UAT or PRD - skipped
+2026-11-03 17:00:54  INFO      GET https://albertsons-uat.npr.mykronos.com/api/v1/commons/function_access_profiles?name=QA%20Team
+2026-11-03 17:00:55  INFO      GET https://albertsons.prd.mykronos.com/api/v1/commons/function_access_profiles?name=QA%20Team
+2026-11-03 17:00:56  INFO      GET https://albertsons-uat.npr.mykronos.com/api/v1/commons/function_access_profiles?name=Default
+2026-11-03 17:00:57  INFO      GET https://albertsons.prd.mykronos.com/api/v1/commons/function_access_profiles?name=Default
+2026-11-03 17:00:58  INFO      Wrote c:\Users\adomi01.SAFEWAY01\OneDrive - Safeway, Inc\Documents\GitHub\UKG Tools\output\fap_tool\fap_UAT_vs_PRD_20261103_170043

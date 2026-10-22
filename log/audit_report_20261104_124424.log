@@ -1,0 +1,57 @@
+2026-11-04 12:44:24  INFO      audit_report_tool starting  dry_run=False
+2026-11-04 12:44:25  INFO      Authentication successful — access token obtained
+2026-11-04 12:44:25  INFO      Running report — POST https://albertsons-npr1.npr.mykronos.com/api/v1/platform/reports/AuditReport/execute
+2026-11-04 12:44:25  INFO      Request headers:
+{
+  "Authorization": "Bearer ***",
+  "Content-Type": "application/json",
+  "Accept": "application/json"
+}
+2026-11-04 12:44:25  INFO      Request body:
+{
+  "parameters": [
+    {
+      "name": "Audit Types",
+      "value": [
+        {
+          "key": "Integration"
+        },
+        {
+          "key": "Integration Instances"
+        }
+      ]
+    },
+    {
+      "name": "DateRange",
+      "value": {
+        "startDate": "2026-10-28",
+        "endDate": "2026-11-04"
+      }
+    },
+    {
+      "name": "Output Format",
+      "value": {
+        "key": "xlsx"
+      }
+    },
+    {
+      "name": "user",
+      "value": ""
+    },
+    {
+      "name": "auditUserIds",
+      "value": ""
+    }
+  ]
+}
+2026-11-04 12:44:28  INFO      Execution started — id=22506, status=In Progress
+2026-11-04 12:44:28  DEBUG     Full response: {"id": 22506, "report": {"qualifier": "AuditReport"}, "outputFormat": {"qualifier": "xlsx"}, "status": {"qualifier": "In Progress"}, "runStartDateTime": "2026-11-03T14:44:27"}
+2026-11-04 12:44:28  INFO      Polling id=22506 every 5s (timeout=600s)
+2026-11-04 12:44:28  DEBUG     Status check id=22506: In Progress
+2026-11-04 12:44:34  DEBUG     Status check id=22506: In Progress
+2026-11-04 12:44:40  DEBUG     Status check id=22506: In Progress
+2026-11-04 12:44:46  DEBUG     Status check id=22506: Completed
+2026-11-04 12:44:46  INFO      Report completed after ~15s
+2026-11-04 12:44:46  INFO      Downloading report — GET https://albertsons-npr1.npr.mykronos.com/api/v1/platform/report_executions/22506/file
+2026-11-04 12:44:49  INFO      Saved: c:\Users\adomi01.SAFEWAY01\OneDrive - Safeway, Inc\Documents\GitHub\UKG Tools\output\AuditReport_22506_20261104_124424.xlsx  (1440.9 KB)
+2026-11-04 12:44:53  INFO      Done

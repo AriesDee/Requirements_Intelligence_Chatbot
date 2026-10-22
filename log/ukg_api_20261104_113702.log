@@ -1,0 +1,54 @@
+2026-11-04 11:37:02  INFO      ukg_api_tool starting — config=ukg_request.json
+2026-11-04 11:37:02  INFO      Request: POST https://host.example/api/v1/test?name=A%20B
+2026-11-04 11:37:02  INFO      Request body:
+{
+  "a": [
+    1,
+    2
+  ],
+  "b": {
+    "c": "d"
+  }
+}
+2026-11-04 11:37:02  INFO      ukg_api_tool starting — config=ukg_request.json
+2026-11-04 11:37:02  INFO      ukg_api_tool starting — config=ukg_request.json
+2026-11-04 11:37:02  INFO      Authentication successful
+2026-11-04 11:37:02  INFO      Authentication successful
+2026-11-04 11:37:02  INFO      Request: POST https://host.example/api/v1/test?name=A%20B
+2026-11-04 11:37:02  INFO      Request: POST https://host.example/api/v1/test?name=A%20B
+2026-11-04 11:37:02  INFO      Request headers:
+{
+  "Authorization": "Bearer ***",
+  "Accept": "application/json, application/octet-stream, */*",
+  "Content-Type": "application/json"
+}
+2026-11-04 11:37:02  INFO      Request headers:
+{
+  "Authorization": "Bearer ***",
+  "Accept": "application/json, application/octet-stream, */*",
+  "Content-Type": "application/json"
+}
+2026-11-04 11:37:02  INFO      Request body:
+{
+  "a": [
+    1,
+    2
+  ],
+  "b": {
+    "c": "d"
+  }
+}
+2026-11-04 11:37:02  INFO      Request body:
+{
+  "a": [
+    1,
+    2
+  ],
+  "b": {
+    "c": "d"
+  }
+}
+2026-11-04 11:37:02  INFO      Response saved: C:\Users\ADOMI0~1.SAF\AppData\Local\Temp\outx\ukg_request_20261104_113702.json  (0.0 KB)
+2026-11-04 11:37:02  INFO      Response saved: C:\Users\ADOMI0~1.SAF\AppData\Local\Temp\outx\ukg_request_20261104_113702.json  (0.0 KB)
+2026-11-04 11:37:02  INFO      Done
+2026-11-04 11:37:02  INFO      Done

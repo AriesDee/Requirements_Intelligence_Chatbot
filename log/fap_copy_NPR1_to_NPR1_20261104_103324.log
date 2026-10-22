@@ -1,0 +1,5 @@
+2026-11-04 10:33:25  INFO      Authentication successful (NPR1)
+2026-11-04 10:33:25  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=Default
+2026-11-04 10:33:26  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=ADOMI01%20Test%20FAP
+2026-11-04 10:33:27  INFO      "ADOMI01 Test FAP" does not exist in NPR1
+2026-11-04 10:33:27  INFO      POST https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles

@@ -1,0 +1,6 @@
+2026-11-03 14:50:30  INFO      Authentication successful
+2026-11-03 14:50:30  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=Super%20Access
+2026-11-03 14:50:31  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=WFM%20Corporate%20Team
+2026-11-03 14:50:33  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=ACI%20CDX%20Access
+2026-11-03 14:50:34  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=Default
+2026-11-03 14:50:35  INFO      Wrote c:\Users\adomi01.SAFEWAY01\OneDrive - Safeway, Inc\Documents\GitHub\UKG Tools\output\fap_comparison_NPR1_20261103_145028.xlsx (4 FAPs, 1291 differing settings)

@@ -1,0 +1,8 @@
+2026-11-03 16:19:12  INFO      Authentication successful
+2026-11-03 16:19:12  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=Super%20Access
+2026-11-03 16:19:13  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=WFM%20Corporate%20Team
+2026-11-03 16:19:14  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=ACI%20CDX%20Access
+2026-11-03 16:19:15  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=API%20User%20Only
+2026-11-03 16:19:16  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=QA%20Team
+2026-11-03 16:19:17  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=Default
+2026-11-03 16:19:19  INFO      Wrote c:\Users\adomi01.SAFEWAY01\OneDrive - Safeway, Inc\Documents\GitHub\UKG Tools\output\fap_tool\fap_NPR1_20261103_161911 (6 FAPs, 1006 differing settings, 6 pair tabs)

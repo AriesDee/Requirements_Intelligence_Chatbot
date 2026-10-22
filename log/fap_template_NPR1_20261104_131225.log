@@ -1,0 +1,3 @@
+2026-11-04 13:12:25  INFO      Authentication successful
+2026-11-04 13:12:25  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=Super%20User
+2026-11-04 13:12:26  INFO      "Super User" does not exist in NPR1

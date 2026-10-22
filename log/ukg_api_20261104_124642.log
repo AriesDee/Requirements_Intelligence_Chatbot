@@ -1,0 +1,40 @@
+2026-11-04 12:46:42  INFO      ukg_api_tool starting — config=ukg_request.json
+2026-11-04 12:46:43  INFO      Authentication successful
+2026-11-04 12:46:43  INFO      Request: POST https://albertsons-npr1.npr.mykronos.com/api/v1/platform/reports/AuditReport/execute
+2026-11-04 12:46:43  INFO      Request headers:
+{
+  "Authorization": "Bearer ***",
+  "Accept": "application/json, application/octet-stream, */*",
+  "Content-Type": "application/json"
+}
+2026-11-04 12:46:43  INFO      Request body:
+{
+  "parameters": [
+    {
+      "name": "Audit Types",
+      "value": [
+        {
+          "key": "Integration"
+        },
+        {
+          "key": "Integration Instances"
+        }
+      ]
+    },
+    {
+      "name": "DateRange",
+      "value": {
+        "startDate": "2026-08-10",
+        "endDate": "2026-08-17"
+      }
+    },
+    {
+      "name": "Output Format",
+      "value": {
+        "key": "xlsx"
+      }
+    }
+  ]
+}
+2026-11-04 12:46:45  INFO      Response saved: c:\Users\adomi01.SAFEWAY01\OneDrive - Safeway, Inc\Documents\GitHub\UKG Tools\output\ukg_request_20261104_124645.json  (0.2 KB)
+2026-11-04 12:46:45  INFO      Done

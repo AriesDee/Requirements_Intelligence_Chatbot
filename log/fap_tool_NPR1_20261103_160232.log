@@ -1,0 +1,11 @@
+2026-11-03 16:02:33  INFO      Authentication successful
+2026-11-03 16:02:33  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=Super%20Access
+2026-11-03 16:02:34  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=WFM%20Corporate%20Team
+2026-11-03 16:02:35  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=Corp%20WFM%20Team
+2026-11-03 16:02:36  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=Corp%20WFM%20Team%20-%20SA
+2026-11-03 16:02:37  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=HRAL%20APP%20Access%20Profile
+2026-11-03 16:02:37  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=ACI%20CDX%20Access
+2026-11-03 16:02:38  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=API%20User%20Only
+2026-11-03 16:02:39  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=QA%20Team
+2026-11-03 16:02:39  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=Default
+2026-11-03 16:02:43  INFO      Wrote c:\Users\adomi01.SAFEWAY01\OneDrive - Safeway, Inc\Documents\GitHub\UKG Tools\output\fap_tool\fap_NPR1_20261103_160232 (9 FAPs, 1006 differing settings, 8 pair tabs)

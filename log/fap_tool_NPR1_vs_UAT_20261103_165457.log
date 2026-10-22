@@ -1,0 +1,19 @@
+2026-11-03 16:54:58  INFO      Authentication successful (NPR1)
+2026-11-03 16:54:59  INFO      Authentication successful (UAT)
+2026-11-03 16:54:59  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=Super%20Access
+2026-11-03 16:55:01  INFO      GET https://albertsons-uat.npr.mykronos.com/api/v1/commons/function_access_profiles?name=Super%20Access
+2026-11-03 16:55:02  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=WFM%20Corporate%20Team
+2026-11-03 16:55:04  INFO      GET https://albertsons-uat.npr.mykronos.com/api/v1/commons/function_access_profiles?name=WFM%20Corporate%20Team
+2026-11-03 16:55:04  INFO      "WFM Corporate Team" does not exist in UAT
+2026-11-03 16:55:04  WARNING   "WFM Corporate Team" exists in NPR1 but not in UAT - skipped
+2026-11-03 16:55:04  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=ACI%20CDX%20Access
+2026-11-03 16:55:05  INFO      GET https://albertsons-uat.npr.mykronos.com/api/v1/commons/function_access_profiles?name=ACI%20CDX%20Access
+2026-11-03 16:55:06  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=API%20User%20Only
+2026-11-03 16:55:07  INFO      GET https://albertsons-uat.npr.mykronos.com/api/v1/commons/function_access_profiles?name=API%20User%20Only
+2026-11-03 16:55:08  INFO      "API User Only" does not exist in UAT
+2026-11-03 16:55:08  WARNING   "API User Only" exists in NPR1 but not in UAT - skipped
+2026-11-03 16:55:08  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=QA%20Team
+2026-11-03 16:55:09  INFO      GET https://albertsons-uat.npr.mykronos.com/api/v1/commons/function_access_profiles?name=QA%20Team
+2026-11-03 16:55:10  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=Default
+2026-11-03 16:55:10  INFO      GET https://albertsons-uat.npr.mykronos.com/api/v1/commons/function_access_profiles?name=Default
+2026-11-03 16:55:12  INFO      Wrote c:\Users\adomi01.SAFEWAY01\OneDrive - Safeway, Inc\Documents\GitHub\UKG Tools\output\fap_tool\fap_NPR1_vs_UAT_20261103_165457

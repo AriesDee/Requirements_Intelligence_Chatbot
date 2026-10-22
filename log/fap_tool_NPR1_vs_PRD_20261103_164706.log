@@ -1,0 +1,11 @@
+2026-11-03 16:47:08  INFO      Authentication successful (NPR1)
+2026-11-03 16:47:09  INFO      Authentication successful (PRD)
+2026-11-03 16:47:09  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=Super%20Access
+2026-11-03 16:47:10  INFO      GET https://albertsons.prd.mykronos.com/api/v1/commons/function_access_profiles?name=Super%20Access
+2026-11-03 16:47:12  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=WFM%20Corporate%20Team
+2026-11-03 16:47:13  INFO      GET https://albertsons.prd.mykronos.com/api/v1/commons/function_access_profiles?name=WFM%20Corporate%20Team
+2026-11-03 16:47:14  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=ACI%20CDX%20Access
+2026-11-03 16:47:15  INFO      GET https://albertsons.prd.mykronos.com/api/v1/commons/function_access_profiles?name=ACI%20CDX%20Access
+2026-11-03 16:47:16  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=API%20User%20Only
+2026-11-03 16:47:17  INFO      GET https://albertsons.prd.mykronos.com/api/v1/commons/function_access_profiles?name=API%20User%20Only
+2026-11-03 16:47:18  ERROR     HTTP 404 for "API User Only": {"errorCode":"WCO-127822","message":"A Function Access Profile does not exist with specified name: API User Only."}

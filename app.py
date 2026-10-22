@@ -71,7 +71,7 @@ st.markdown("""
 /* ── Base font ──────────────────────────────────────────────────────── */
 html, body, [class*="css"], .stMarkdown, .stText,
 button, input, select, textarea, label {
-    font-family: 'Segoe UI', Calibri, 'Trebuchet MS', Arial, sans-serif !important;
+    font-family: Verdana, Geneva, sans-serif !important;
     font-size: 1rem !important;
 }
 
@@ -1115,7 +1115,7 @@ if app_mode == "Inventory Explorer":
                                              font-weight:800;text-transform:uppercase;letter-spacing:0.08em;
                                              padding:2px 7px;border-radius:3px;">{sev}</span>
                                 <span style="font-weight:700;color:{txt};font-size:0.92rem;">{ft}</span>
-                                <span style="font-size:0.85rem;color:#6b7a99;font-family:'Segoe UI',Calibri,'Trebuchet MS',Arial,sans-serif;">{iss["requirement_id"]}</span>
+                                <span style="font-size:0.85rem;color:#6b7a99;font-family:Verdana,Geneva,sans-serif;">{iss["requirement_id"]}</span>
                             </div>
                             <div style="font-size:0.92rem;color:#2c3e50;margin-bottom:4px;">{iss["description"]}</div>
                             <div style="font-size:0.9rem;color:#4a6080;font-style:italic;">→ {iss["recommendation"]}</div>

@@ -1,0 +1,17 @@
+2026-11-03 16:53:45  INFO      Authentication successful (NPR1)
+2026-11-03 16:53:46  INFO      Authentication successful (PRD)
+2026-11-03 16:53:46  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=Super%20Access
+2026-11-03 16:53:47  INFO      GET https://albertsons.prd.mykronos.com/api/v1/commons/function_access_profiles?name=Super%20Access
+2026-11-03 16:53:49  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=WFM%20Corporate%20Team
+2026-11-03 16:53:50  INFO      GET https://albertsons.prd.mykronos.com/api/v1/commons/function_access_profiles?name=WFM%20Corporate%20Team
+2026-11-03 16:53:51  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=ACI%20CDX%20Access
+2026-11-03 16:53:52  INFO      GET https://albertsons.prd.mykronos.com/api/v1/commons/function_access_profiles?name=ACI%20CDX%20Access
+2026-11-03 16:53:53  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=API%20User%20Only
+2026-11-03 16:53:54  INFO      GET https://albertsons.prd.mykronos.com/api/v1/commons/function_access_profiles?name=API%20User%20Only
+2026-11-03 16:53:54  INFO      "API User Only" does not exist in PRD
+2026-11-03 16:53:54  WARNING   "API User Only" exists in NPR1 but not in PRD - skipped
+2026-11-03 16:53:54  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=QA%20Team
+2026-11-03 16:53:55  INFO      GET https://albertsons.prd.mykronos.com/api/v1/commons/function_access_profiles?name=QA%20Team
+2026-11-03 16:53:56  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=Default
+2026-11-03 16:53:57  INFO      GET https://albertsons.prd.mykronos.com/api/v1/commons/function_access_profiles?name=Default
+2026-11-03 16:53:58  INFO      Wrote c:\Users\adomi01.SAFEWAY01\OneDrive - Safeway, Inc\Documents\GitHub\UKG Tools\output\fap_tool\fap_NPR1_vs_PRD_20261103_165344

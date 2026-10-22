@@ -1,0 +1,13 @@
+2026-11-03 13:29:12  INFO      audit_report_tool starting  dry_run=False
+2026-11-03 13:29:13  INFO      Authentication successful — access token obtained
+2026-11-03 13:29:13  INFO      Running report — POST https://albertsons-npr1.npr.mykronos.com/api/v1/platform/reports/AuditReport/execute
+2026-11-03 13:29:13  DEBUG     Payload: {"parameters": [{"name": "audittype", "value": [{"key": "INTEGRATION", "title": "Integration"}]}, {"name": "auditBeginDate", "value": "2026-10-27"}, {"name": "auditEndDate", "value": "2026-11-03"}, {"name": "user", "value": ""}, {"name": "auditUserIds", "value": ""}, {"name": "Output Format", "value": {"key": "xlsx", "title": "XLSX"}}, {"name": "PRIORITY", "value": 0}]}
+2026-11-03 13:29:15  INFO      Execution started — id=22503, status=In Progress
+2026-11-03 13:29:15  DEBUG     Full response: {"id": 22503, "report": {"qualifier": "AuditReport"}, "outputFormat": {"qualifier": "xlsx"}, "status": {"qualifier": "In Progress"}, "runStartDateTime": "2026-11-03T05:29:15"}
+2026-11-03 13:29:15  INFO      Polling id=22503 every 5s (timeout=600s)
+2026-11-03 13:29:16  DEBUG     Status check id=22503: In Progress
+2026-11-03 13:29:22  DEBUG     Status check id=22503: Completed
+2026-11-03 13:29:22  INFO      Report completed after ~5s
+2026-11-03 13:29:22  INFO      Downloading report — GET https://albertsons-npr1.npr.mykronos.com/api/v1/platform/report_executions/22503/file
+2026-11-03 13:29:24  INFO      Saved: c:\Users\adomi01.SAFEWAY01\OneDrive - Safeway, Inc\Documents\GitHub\UKG Tools\output\AuditReport_22503_20261103_132912.xlsx  (73.8 KB)
+2026-11-03 13:29:24  INFO      Done

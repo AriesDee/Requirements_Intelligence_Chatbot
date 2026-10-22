@@ -1,0 +1,6 @@
+2026-11-04 16:04:00  INFO      Authentication successful
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=ADOMI01%20Test%20FAP
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=Super%20Access
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=Super%20Access
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=Super%20Access
+2026-11-04 16:04:00  INFO      "Super Access" does not exist in NPR1

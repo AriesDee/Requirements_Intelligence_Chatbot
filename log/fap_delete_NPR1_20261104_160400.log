@@ -1,0 +1,88 @@
+2026-11-04 16:04:00  INFO      Authentication successful
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=ADOMI01%20Test%20FAP
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=Nope
+2026-11-04 16:04:00  INFO      "Nope" does not exist in NPR1
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=Super%20Access
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=Dup
+2026-11-04 16:04:00  INFO      Authentication successful
+2026-11-04 16:04:00  INFO      Authentication successful
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=ADOMI01%20Test%20FAP
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=ADOMI01%20Test%20FAP
+2026-11-04 16:04:00  INFO      Authentication successful
+2026-11-04 16:04:00  INFO      Authentication successful
+2026-11-04 16:04:00  INFO      Authentication successful
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=ADOMI01%20Test%20FAP
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=ADOMI01%20Test%20FAP
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=ADOMI01%20Test%20FAP
+2026-11-04 16:04:00  INFO      Authentication successful
+2026-11-04 16:04:00  INFO      Authentication successful
+2026-11-04 16:04:00  INFO      Authentication successful
+2026-11-04 16:04:00  INFO      Authentication successful
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=ADOMI01%20Test%20FAP
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=ADOMI01%20Test%20FAP
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=ADOMI01%20Test%20FAP
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=ADOMI01%20Test%20FAP
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=ADOMI01%20Test%20FAP%202
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=ADOMI01%20Test%20FAP%202
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=ADOMI01%20Test%20FAP%202
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=ADOMI01%20Test%20FAP%202
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=In%20Use
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=In%20Use
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=In%20Use
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=In%20Use
+2026-11-04 16:04:00  INFO      DELETE https://x/api/v1/commons/function_access_profiles/914
+2026-11-04 16:04:00  INFO      DELETE https://x/api/v1/commons/function_access_profiles/914
+2026-11-04 16:04:00  INFO      DELETE https://x/api/v1/commons/function_access_profiles/914
+2026-11-04 16:04:00  INFO      DELETE https://x/api/v1/commons/function_access_profiles/914
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=ADOMI01%20Test%20FAP
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=ADOMI01%20Test%20FAP
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=ADOMI01%20Test%20FAP
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=ADOMI01%20Test%20FAP
+2026-11-04 16:04:00  INFO      DELETE https://x/api/v1/commons/function_access_profiles/915
+2026-11-04 16:04:00  INFO      DELETE https://x/api/v1/commons/function_access_profiles/915
+2026-11-04 16:04:00  INFO      DELETE https://x/api/v1/commons/function_access_profiles/915
+2026-11-04 16:04:00  INFO      DELETE https://x/api/v1/commons/function_access_profiles/915
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=ADOMI01%20Test%20FAP%202
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=ADOMI01%20Test%20FAP%202
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=ADOMI01%20Test%20FAP%202
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=ADOMI01%20Test%20FAP%202
+2026-11-04 16:04:00  INFO      "ADOMI01 Test FAP 2" does not exist in NPR1
+2026-11-04 16:04:00  INFO      "ADOMI01 Test FAP 2" does not exist in NPR1
+2026-11-04 16:04:00  INFO      "ADOMI01 Test FAP 2" does not exist in NPR1
+2026-11-04 16:04:00  INFO      "ADOMI01 Test FAP 2" does not exist in NPR1
+2026-11-04 16:04:00  INFO      DELETE https://x/api/v1/commons/function_access_profiles/916
+2026-11-04 16:04:00  INFO      DELETE https://x/api/v1/commons/function_access_profiles/916
+2026-11-04 16:04:00  INFO      DELETE https://x/api/v1/commons/function_access_profiles/916
+2026-11-04 16:04:00  INFO      DELETE https://x/api/v1/commons/function_access_profiles/916
+2026-11-04 16:04:00  ERROR     HTTP 400 deleting In Use: {"errorCode": "WCO-127807", "message": "This Function Access Profile is already in use or Gold Data, so could not be deleted."}
+2026-11-04 16:04:00  ERROR     HTTP 400 deleting In Use: {"errorCode": "WCO-127807", "message": "This Function Access Profile is already in use or Gold Data, so could not be deleted."}
+2026-11-04 16:04:00  ERROR     HTTP 400 deleting In Use: {"errorCode": "WCO-127807", "message": "This Function Access Profile is already in use or Gold Data, so could not be deleted."}
+2026-11-04 16:04:00  ERROR     HTTP 400 deleting In Use: {"errorCode": "WCO-127807", "message": "This Function Access Profile is already in use or Gold Data, so could not be deleted."}
+2026-11-04 16:04:00  INFO      Authentication successful
+2026-11-04 16:04:00  INFO      Authentication successful
+2026-11-04 16:04:00  INFO      Authentication successful
+2026-11-04 16:04:00  INFO      Authentication successful
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=ADOMI01%20Test%20FAP
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=ADOMI01%20Test%20FAP
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=ADOMI01%20Test%20FAP
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=ADOMI01%20Test%20FAP
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=Super%20Access
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=Super%20Access
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=Super%20Access
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=Super%20Access
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=Super%20Access
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=Super%20Access
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=Super%20Access
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=Super%20Access
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=Super%20Access
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=Super%20Access
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=Super%20Access
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=Super%20Access
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=Super%20Access
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=Super%20Access
+2026-11-04 16:04:00  INFO      GET https://x/api/v1/commons/function_access_profiles?name=Super%20Access
+2026-11-04 16:04:00  INFO      "Super Access" does not exist in NPR1
+2026-11-04 16:04:00  INFO      "Super Access" does not exist in NPR1
+2026-11-04 16:04:00  INFO      "Super Access" does not exist in NPR1
+2026-11-04 16:04:00  INFO      "Super Access" does not exist in NPR1
+2026-11-04 16:04:00  INFO      "Super Access" does not exist in NPR1

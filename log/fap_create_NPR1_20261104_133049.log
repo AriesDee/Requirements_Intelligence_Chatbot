@@ -1,0 +1,3 @@
+2026-11-04 13:30:50  INFO      Authentication successful
+2026-11-04 13:30:50  INFO      POST https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles
+2026-11-04 13:30:51  ERROR     HTTP 400: {"errorCode":"WCO-127815","message":"Illegal value provided for actionName: ADD."}

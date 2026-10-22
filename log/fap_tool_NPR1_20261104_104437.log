@@ -1,0 +1,4 @@
+2026-11-04 10:44:38  INFO      Authentication successful
+2026-11-04 10:44:38  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=ADOMI01%20Test%20FAP
+2026-11-04 10:44:39  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles?name=Default
+2026-11-04 10:44:41  INFO      Wrote c:\Users\adomi01.SAFEWAY01\OneDrive - Safeway, Inc\Documents\GitHub\UKG Tools\output\fap_tool\fap_NPR1_20261104_104437 (2 FAPs, 3 differing settings, 1 pair tabs)

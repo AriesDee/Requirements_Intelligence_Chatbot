@@ -1,0 +1,31 @@
+2026-11-04 12:46:36  INFO      ukg_api_tool starting — config=ukg_request.json
+2026-11-04 12:46:36  INFO      Request: POST https://albertsons-npr1.npr.mykronos.com/api/v1/platform/reports/AuditReport/execute
+2026-11-04 12:46:36  INFO      Request body:
+{
+  "parameters": [
+    {
+      "name": "Audit Types",
+      "value": [
+        {
+          "key": "Integration"
+        },
+        {
+          "key": "Integration Instances"
+        }
+      ]
+    },
+    {
+      "name": "DateRange",
+      "value": {
+        "startDate": "2026-08-10",
+        "endDate": "2026-08-17"
+      }
+    },
+    {
+      "name": "Output Format",
+      "value": {
+        "key": "xlsx"
+      }
+    }
+  ]
+}
