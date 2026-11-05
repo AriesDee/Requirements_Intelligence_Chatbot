@@ -15,7 +15,7 @@ import fap_read_tool as read_t
 import fap_template_tool as tpl_t
 import fap_tool
 import fap_update_tool as upd_t
-from fap_fakes import FakeUKG, perm, super_access
+from fap_fakes import FakeResponse, FakeUKG, perm, super_access
 
 
 def methods(ukg):
@@ -467,29 +467,90 @@ class TestTemplates:
 # ───────────────────────────────── Read flow ──────────────────────────────────
 
 class TestRead:
-    def test_read_all(self, ukg, tmp_path):
-        ukg.add('B', [perm('PERSON', 'VIEW'), perm('PERSON', 'ADD')])
-        assert read_t.run(ukg, '', tmp_path)
-        f = next((tmp_path / 'fap_read').glob('fap_read_NPR1_all_*.xlsx'))
-        wb = load_workbook(f)
-        fap_rows = list(wb['FAPs'].iter_rows(values_only=True))
-        assert [r[1] for r in fap_rows[1:]] == ['B', 'Super Access']        # sorted, case-insensitive
-        assert fap_rows[1][4] == 2 and fap_rows[1][5] == 1                  # permissions, control points
-        assert wb['Permissions'].max_row == 1 + 2 + len(super_access()['permissionTypes'])
-        assert ukg.calls[-1] == ('GET', '/api/v1/commons/function_access_profiles')
+    def test_list_all_is_one_request_and_has_no_permissions(self, ukg, tmp_path, capsys):
+        ukg.add('B', [perm('PERSON', 'VIEW')], description='bee')
+        assert read_t.run(ukg, [], tmp_path)
+        assert ukg.calls == [('GET', '/api/v1/commons/function_access_profiles')]
+        wb = load_workbook(next((tmp_path / 'fap_read').glob('fap_read_NPR1_all_*.xlsx')))
+        assert wb.sheetnames == ['FAPs', 'Notes']                          # no Permissions sheet
+        rows = list(wb['FAPs'].iter_rows(values_only=True))
+        assert rows[0] == ('id', 'name', 'description')
+        assert [r[1] for r in rows[1:]] == ['B', 'Super Access'] and rows[1][2] == 'bee'
+        assert 'does not return permissions' in ' '.join(c.value for c in wb['Notes']['A'])
+        assert 'does not return permissions' in capsys.readouterr().out
 
-    def test_read_one_by_exact_name(self, ukg, tmp_path):
-        ukg.add('Team', [perm('PERSON', 'VIEW')])
-        assert read_t.run(ukg, 'team', tmp_path)
-        f = next((tmp_path / 'fap_read').glob('fap_read_NPR1_team_*.xlsx'))
-        assert load_workbook(f)['FAPs'].max_row == 2
+    def test_blank_text_means_list_all(self, ukg, tmp_path):
+        assert read_t.run(ukg, '  \n ', tmp_path)
+        assert list((tmp_path / 'fap_read').glob('fap_read_NPR1_all_*.xlsx'))
+
+    def test_one_name_gives_the_full_report(self, ukg, tmp_path):
+        ukg.add('Team', [perm('PERSON', 'VIEW'), perm('PERSON', 'ADD')])
+        assert read_t.run(ukg, ['team'], tmp_path)
+        wb = load_workbook(next((tmp_path / 'fap_read').glob('fap_read_NPR1_Team_*.xlsx')))
+        assert wb.sheetnames == ['FAPs', 'Permissions', 'Notes']
+        rows = list(wb['FAPs'].iter_rows(values_only=True))
+        assert rows[0] == ('id', 'name', 'description', 'isDefault', 'permissions', 'control points')
+        assert rows[1][4] == 2 and rows[1][5] == 1 and wb['Permissions'].max_row == 3
         assert ukg.calls[-1][1].endswith('?name=team')
+        assert ('GET', '/api/v1/commons/function_access_profiles') not in ukg.calls
 
-    def test_partial_name_finds_nothing(self, ukg, tmp_path, capsys):
-        assert not read_t.run(ukg, 'Super Acces', tmp_path)
+    def test_several_names_one_file_one_request_each(self, ukg, tmp_path):
+        ukg.add('A', [perm('PERSON', 'VIEW')])
+        ukg.add('B', [perm('TIMECARD', 'EDIT'), perm('TIMECARD', 'VIEW')])
+        assert read_t.run(ukg, 'A\nB\na', tmp_path)                        # text input, repeat dropped
+        wb = load_workbook(next((tmp_path / 'fap_read').glob('fap_read_NPR1_2_faps_*.xlsx')))
+        assert [r[1] for r in list(wb['FAPs'].iter_rows(values_only=True))[1:]] == ['A', 'B']
+        assert wb['Permissions'].max_row == 1 + 1 + 2 and len(ukg.calls) == 2
+
+    def test_unknown_name_is_skipped_and_the_rest_still_read(self, ukg, tmp_path, capsys):
+        ukg.add('A', [perm('PERSON', 'VIEW')])
+        assert read_t.run(ukg, ['A', 'Super Acces'], tmp_path)
         out = capsys.readouterr().out
-        assert 'NOTHING FOUND' in out and 'WCO-127822' in out
+        assert 'SKIP    "Super Acces"' in out and '1 name(s) skipped' in out
+        wb = load_workbook(next((tmp_path / 'fap_read').glob('fap_read_NPR1_2_faps_*.xlsx')))
+        assert wb['FAPs'].max_row == 2
+        assert any('Super Acces' in str(c.value) for c in wb['Notes']['A'])
+
+    def test_separate_tabs_one_sheet_per_fap(self, ukg, tmp_path):
+        ukg.add('A', [perm('PERSON', 'VIEW')])
+        ukg.add('B', [perm('TIMECARD', 'VIEW'), perm('TIMECARD', 'EDIT', 'ONLY_SELF')])
+        assert read_t.run(ukg, ['A', 'B'], tmp_path, separate_tabs=True)
+        wb = load_workbook(next((tmp_path / 'fap_read').glob('fap_read_NPR1_2_faps_*.xlsx')))
+        assert wb.sheetnames == ['FAPs', 'A', 'B', 'Notes'] or set(wb.sheetnames) == {'FAPs', 'A', 'B', 'Notes'}
+        assert 'Permissions' not in wb.sheetnames
+        assert list(wb['B'].iter_rows(values_only=True)) == [
+            ('Control Point', 'actionName', 'scopeName'),
+            ('TIMECARD', 'EDIT', 'ONLY_SELF'), ('TIMECARD', 'VIEW', 'ALL')]
+        assert wb['FAPs'].max_row == 3
+
+    def test_default_is_one_permissions_tab(self, ukg, tmp_path):
+        ukg.add('A', [perm('PERSON', 'VIEW')])
+        read_t.run(ukg, ['A'], tmp_path)
+        wb = load_workbook(next((tmp_path / 'fap_read').glob('fap_read_NPR1_A_*.xlsx')))
+        assert 'Permissions' in wb.sheetnames and 'A' not in wb.sheetnames
+
+    def test_sheet_titles_are_excel_safe_and_unique(self):
+        used = {'faps', 'notes'}
+        titles = [read_t.sheet_title(n, used) for n in
+                  ['Notes', 'FAPs', 'a/b:c*d?[e]', 'X' * 40, 'X' * 40, 'x' * 40, 'ADOMI01 Test']]
+        assert titles[0] == 'Notes (2)' and titles[1] == 'FAPs (2)'
+        assert not set('[]:*?/\\') & set(titles[2])
+        assert all(len(t) <= 31 for t in titles) and len({t.lower() for t in titles}) == len(titles)
+        assert titles[-1] == 'ADOMI01 Test'
+
+    def test_partial_name_alone_finds_nothing(self, ukg, tmp_path, capsys):
+        assert not read_t.run(ukg, ['Super Acces'], tmp_path)
+        assert 'NOTHING FOUND' in capsys.readouterr().out
         assert not (tmp_path / 'fap_read').exists()
+
+    def test_a_failing_lookup_is_skipped_not_fatal(self, ukg, tmp_path, capsys):
+        ukg.add('A', [perm('PERSON', 'VIEW')])
+        ukg.add('B', [perm('PERSON', 'VIEW')])
+        orig = ukg.request
+        ukg.request = lambda m, path, **k: (FakeResponse(500, {}) if path.endswith('?name=B')
+                                            else orig(m, path, **k))
+        assert read_t.run(ukg, ['A', 'B'], tmp_path)
+        assert 'SKIP    "B"' in capsys.readouterr().out
 
 
 # ─────────────────────────────── fap_tool lookup ──────────────────────────────

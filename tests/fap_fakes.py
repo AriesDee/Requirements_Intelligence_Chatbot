@@ -82,7 +82,9 @@ class FakeUKG:
                     return FakeResponse(404, {'errorCode': 'WCO-127822', 'message':
                                               f'A Function Access Profile does not exist with specified name: {name}.'})
                 return FakeResponse(200, [rec])
-            return FakeResponse(200, list(self.faps.values()))
+            # the list call returns id, name, description only (as seen on NPR1)
+            return FakeResponse(200, [{k: v for k, v in f.items() if k in ('id', 'name', 'description')}
+                                      for f in self.faps.values()])
         if method == 'POST':
             bad = self._bad_action(json)
             if bad:

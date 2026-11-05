@@ -41,7 +41,7 @@ HELP = [
                    'files are saved in the output folder (see "Output and log files").'),
 
     ('h2', 'Tabs at a glance'),
-    ('bullet', 'Read - read all FAPs, or the one FAP with a given name, into an Excel report.'),
+    ('bullet', 'Read - list all FAPs, or read the FAPs you name with their permissions, into an Excel report.'),
     ('bullet', 'Copy - copy an existing FAP to a new name (same or another environment), or export it to '
                'an Excel file you can edit.'),
     ('bullet', 'Create - create a new FAP from an Excel file. Also: blank templates, and Validate + Save Payload '
@@ -111,12 +111,24 @@ HELP = [
 
     ('h2', 'Read tab'),
     ('body', 'Reads FAPs from the Connection panel environment and saves an Excel report. Read-only.'),
-    ('step', 'FAP name', 'Leave blank to read ALL FAPs. With a name, only the FAP with exactly that name is '
-                         'read. A partial or misspelled name finds nothing: UKG answers WCO-127822 "A '
-                         'Function Access Profile does not exist with specified name".'),
-    ('step', 'Read to Excel', 'Saves output/fap_read/fap_read_<env>_<all or name>_<time>.xlsx with a FAPs sheet '
-                              '(id, name, description, isDefault, permission count, control point count), a '
-                              'Permissions sheet (FAP, id, control point, action, scope) and a Notes sheet.'),
+    ('warn', 'UKG does not return permissions when all FAPs are listed. To get permissions you must give the '
+             'FAP name(s).'),
+    ('step', 'FAP name(s)', 'One name per line. Leave blank to list ALL FAPs. Names must match exactly (case is '
+                            'ignored): a partial or misspelled name finds nothing (UKG: WCO-127822 "A Function '
+                            'Access Profile does not exist with specified name"). A name that is not found is '
+                            'skipped and the others are still read.'),
+    ('step', 'Put each FAP\'s permissions on its own tab', 'Off by default (one Permissions tab for all the FAPs, '
+                                                          'with the FAP name on every row). On: no Permissions '
+                                                          'tab; instead one tab per FAP, named after it (cut to '
+                                                          '31 characters, as Excel requires), with Control '
+                                                          'Point, actionName and scopeName. Only used when '
+                                                          'names are given.'),
+    ('step', 'Read to Excel (no names)', 'One request. Saves fap_read_<env>_all_<time>.xlsx with a FAPs sheet '
+                                         '(id, name, description) and a Notes sheet. No permissions.'),
+    ('step', 'Read to Excel (with names)', 'One request per name. Saves fap_read_<env>_<name or N_faps>_<time>.xlsx '
+                                           'with a FAPs sheet (id, name, description, isDefault, permission '
+                                           'count, control point count), a Permissions sheet (FAP, id, control '
+                                           'point, action, scope) and a Notes sheet.'),
     ('step', 'Open Read Folder', 'Opens the folder where reports are saved.'),
     ('note', 'The report is for looking at. To get a FAP in the layout the Create and Update tabs read, use '
              'Copy -> "Excel file".'),
@@ -239,7 +251,7 @@ HELP = [
     ('body', 'Folders are next to the program. Each run creates its own timestamped folder under output/.'),
     ('step', 'output/fap_create/', 'dry_run_<name>_<env>_<time>.json (Validate + Save Payload), or payload.json and '
                                    'response.json (real create).'),
-    ('step', 'output/fap_read/', 'fap_read_<env>_<all or name>_<time>.xlsx.'),
+    ('step', 'output/fap_read/', 'fap_read_<env>_<all, name or N_faps>_<time>.xlsx.'),
     ('step', 'output/fap_copy/', 'source.json (the FAP copied), payload.json or dry_run_...json, response.json.'),
     ('step', 'output/fap_update/', 'backup_<FAP>.json (before the update), payload.json or dry_run_...json, '
                                    'response.json.'),

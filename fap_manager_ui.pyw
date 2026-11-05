@@ -9,7 +9,7 @@ Credential profiles can be created, updated and deleted from the panel, and the 
 tested there; profiles are shared with UKG Tools and the stonebranch UI.
 
 Tabs
-  Read     — read all FAPs, or the one FAP with a given name, into an Excel report
+  Read     — list all FAPs, or read the FAPs you name (with permissions), into an Excel report
   Copy     — copy an existing FAP to a new name (same or another environment), or export it
              to an editable Excel file (template for the Create tab)
   Create   — build a new FAP from an Excel file (control point x ADD/EDIT/DELETE/VIEW, scopeName);
@@ -593,18 +593,22 @@ class FapManagerUI(tk.Tk):
 
     def _build_read_tab(self, parent):
         parent.columnconfigure(1, weight=1)
-        self._read_name = tk.StringVar()
-        ttk.Label(parent, text='FAP name:').grid(row=0, column=0, sticky='w', padx=6, pady=(8, 2))
-        ttk.Entry(parent, textvariable=self._read_name).grid(row=0, column=1, sticky='ew',
-                                                             padx=6, pady=(8, 2))
+        ttk.Label(parent, text='FAP name(s):').grid(row=0, column=0, sticky='nw', padx=6, pady=(8, 2))
+        self._read_names = tk.Text(parent, height=4, width=60, wrap='none', undo=True)
+        self._read_names.grid(row=0, column=1, sticky='ew', padx=6, pady=(8, 2))
         ttk.Label(parent, foreground='gray', justify='left',
-                  text='Leave blank to read ALL FAPs in the Connection panel environment. With a name, only the FAP '
-                       'with exactly that name is read (a partial name finds nothing).\n'
-                       'Saves an Excel report: a FAPs sheet (id, name, description, permission count) and a '
-                       'Permissions sheet (one row per control point, action and scope). Read-only.'
+                  text='Leave blank to list ALL FAPs (id, name, description only). UKG does not return permissions '
+                       'when all FAPs are listed.\n'
+                       'To get permissions, enter one or more exact FAP names, one per line: the report then also '
+                       'has the permission counts and a Permissions sheet.\n'
+                       'A name that is not found is skipped; the others are still read. Read-only.'
                   ).grid(row=1, column=1, sticky='w', padx=6)
+        self._read_tabs = tk.BooleanVar(value=False)
+        ttk.Checkbutton(parent, text='Put each FAP\'s permissions on its own tab (names only; default: one '
+                                     'Permissions tab for all)',
+                        variable=self._read_tabs).grid(row=2, column=1, sticky='w', padx=6, pady=(4, 0))
         btns = ttk.Frame(parent)
-        btns.grid(row=2, column=0, columnspan=2, sticky='ew', padx=6, pady=8)
+        btns.grid(row=3, column=0, columnspan=2, sticky='ew', padx=6, pady=8)
         b = ttk.Button(btns, text='Read to Excel', command=self._run_read)
         b.pack(side='left', padx=(0, 6))
         self._action_btns.append(b)
@@ -614,11 +618,12 @@ class FapManagerUI(tk.Tk):
     def _run_read(self):
         if self._busy:
             return
-        name = self._read_name.get().strip()
+        names = _fdel.parse_names(self._read_names.get('1.0', 'end'))
+        tabs = self._read_tabs.get()
         client = self._make_client(self._conn_env.get(), self._conn_prof.get())
         if client is None:
             return
-        self._start('Reading FAPs...', lambda: _fread.run(client, name, OUTPUT_DIR))
+        self._start('Reading FAPs...', lambda: _fread.run(client, names, OUTPUT_DIR, tabs))
 
     # =========================================================================
     # Copy tab
