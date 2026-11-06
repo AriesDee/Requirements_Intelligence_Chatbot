@@ -1,0 +1,3 @@
+2026-11-05 16:31:28  INFO      Authentication successful
+2026-11-05 16:31:28  INFO      GET https://albertsons-npr1.npr.mykronos.com/api/v1/commons/function_access_profiles
+2026-11-05 16:31:30  DEBUG     First record keys: ['description', 'id', 'name']
